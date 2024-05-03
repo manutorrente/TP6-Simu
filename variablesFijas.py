@@ -1,19 +1,14 @@
-import pickle
-import modelo
+import numpy as np
 
 class DistribucionesFijas:
 
-    ### guardar la secuencia de valores aleatorios en un archivo para poder reproducir la simulación
-    def __init__(self):
-        with open("proximas_llegadas.pkl", "rb") as f:
-            self.proximas_llegadas = pickle.load(f)
-        with open("montos_honorarios.pkl", "rb") as f:
-            self.montos_honorarios = pickle.load(f)
-        with open("duracion_consulta.pkl", "rb") as f:
-            self.duraciones_consulta = pickle.load(f)
+    def __init__(self, llegadas, montos, duracion):
         self.i_llegadas = 0
         self.i_montos = 0
         self.i_duracion = 0
+        self.proximas_llegadas = llegadas
+        self.montos_honorarios = montos
+        self.duraciones_consulta = duracion
         self.len = len(self.proximas_llegadas)
 
 
@@ -42,18 +37,9 @@ class DistribucionesFijas:
         return r
 
 
-
-
-
 def crear_archivos_distribuciones(len, distribuciones):
 
-    proximas_llegadas = [distribuciones.generar_proxima_llegada() for _ in range(len)]
-    montos_honorarios = [distribuciones.generar_monto_honorarios() for _ in range(len)]
-    duraciones_consulta = [distribuciones.generar_duracion_consulta() for _ in range(len)]
-
-    with open("proximas_llegadas.pkl", "wb") as f:
-        pickle.dump(proximas_llegadas, f)
-    with open("montos_honorarios.pkl", "wb") as f:
-        pickle.dump(montos_honorarios, f)
-    with open("duracion_consulta.pkl", "wb") as f:
-        pickle.dump(duraciones_consulta, f)
+    proximas_llegadas = np.array([distribuciones.generar_proxima_llegada() for _ in range(len)])
+    montos_honorarios = np.array([distribuciones.generar_monto_honorarios() for _ in range(len)])
+    duraciones_consulta = np.array([distribuciones.generar_duracion_consulta() for _ in range(len)])
+    return proximas_llegadas, montos_honorarios, duraciones_consulta

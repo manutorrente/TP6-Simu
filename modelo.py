@@ -1,10 +1,10 @@
 import numpy as np
 from scipy.stats import binom, norm, lognorm, truncnorm
-import pickle
+import math
 
 class Modelo:
 
-    def __init__(self, b, m, loops, horas_semanales = 40, aleatoriedad = None):
+    def __init__(self, b, m, loops, horas_semanales = 40, aleatoriedad = None, crit = "lineal"):
         self.b = b
         self.m = m
         self.horas_semanales = horas_semanales
@@ -21,6 +21,7 @@ class Modelo:
             self.aleatorias = aleatoriedad
         else:
             self.aleatorias = DistribucionesAleatorias()
+        self.crit = crit
 
     def init_random(self):
         self.pacientes_actuales = np.random.randint(0, 40, self.horas_semanales)
@@ -45,7 +46,17 @@ class Modelo:
             else:
                 return None
             
+        
     def evaluar_monto(self, monto):
+        if self.crit == "log":
+            return self.evaluar_monto_log(monto)
+        elif self.crit == "lineal":
+            return self.evaluar_monto_lineal(monto)
+    
+    def evaluar_monto_log(self, monto):
+        return monto > self.b + math.log(self.m*self.horas_ocupadas() + 1)
+    
+    def evaluar_monto_lineal(self, monto):
         return monto > self.b + self.m*self.horas_ocupadas()
 
     def loop(self):
