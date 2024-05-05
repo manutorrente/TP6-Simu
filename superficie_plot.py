@@ -64,7 +64,7 @@ class SuperficiePlot:
         distribuciones = self.generadorSecuencias.nueva_secuencias()
         resultados = []
         for distribucion in distribuciones:
-            model = modelo.Modelo(x, y, loops=self.n_loops, aleatoriedad = distribucion, crit="log")
+            model = modelo.Modelo(x, y, loops=self.n_loops, aleatoriedad = distribucion, crit = self.criteria)
             resultados.append(model.simular()[self.resultado_a_optimizar])
         resultado = sum(resultados)/len(distribuciones)
         return resultado
@@ -108,7 +108,7 @@ class SuperficiePlot:
         if self.criteria == 'log':
             def function(x, b, m):
                 return b + m * np.log(x + 1)
-        else:
+        elif self.criteria == 'lineal':
             def function(x, b, m):
                 return b + m * x
 
