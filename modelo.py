@@ -163,12 +163,12 @@ class DistribucionesNuevas:
 
     def generar_proxima_llegada(self):
         params = {'b': 0.2530355326169663, 'loc': 1.9999999999999998, 'scale': 2.220442218350816}
-        return exponpow.rvs(b=params['b'], loc=params['loc'], scale=params['scale'])
+        return exponpow.rvs(b=params['b'], loc=params['loc'], scale=params['scale'])/7
 
     def generar_monto_honorarios(self):
-        params = {'k': 98.9292288769887, 's': 2.0254220214519876, 'loc': 14.861378634704273, 'scale': 0.02783457664798305}
+        params = {'k': 0.6537121713667068, 's': 4.535972358049413, 'loc': 8.999999793193584, 'scale': 21.772360198928865}
         return mielke.rvs(k=params['k'], s=params['s'], loc=params['loc'], scale=params['scale'])
     
     def generar_duracion_consulta(self):
         params = {'p': 0.24829868410300127, 'a': 0.9027799441751452, 'b': 0.9027799436159013, 'loc': 1.9999999434593596, 'scale': 7.062554221953598e-08}
-        return genhyperbolic.rvs(p=params['p'], a=params['a'], b=params['b'], loc=params['loc'], scale=params['scale'])
+        return genhyperbolic.rvs(p=params['p'], a=params['a'], b=params['b'], loc=params['loc'], scale=params['scale'])*4
