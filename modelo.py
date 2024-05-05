@@ -54,7 +54,7 @@ class Modelo:
             return self.evaluar_monto_lineal(monto)
     
     def evaluar_monto_log(self, monto):
-        return monto > self.b + math.log(self.m*self.horas_ocupadas() + 1)
+        return monto > self.b + self.m*math.log(self.horas_ocupadas() + 1)
     
     def evaluar_monto_lineal(self, monto):
         return monto > self.b + self.m*self.horas_ocupadas()
