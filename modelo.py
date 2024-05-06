@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.stats import binom, norm, lognorm, truncnorm, exponpow, mielke, genhyperbolic
+from scipy.stats import binom, norm, lognorm, truncnorm, exponpow, mielke, genhyperbolic, johnsonsb, gennorm, powerlaw
 import math
 
 class Modelo:
@@ -159,7 +159,7 @@ class DistribucionesAleatorias:
         
 
 
-class DistribucionesNuevas:
+class DistribucionesViejas:
 
     def generar_proxima_llegada(self):
         params = {'b': 0.2530355326169663, 'loc': 1.9999999999999998, 'scale': 2.220442218350816}
@@ -172,3 +172,18 @@ class DistribucionesNuevas:
     def generar_duracion_consulta(self):
         params = {'p': 0.24829868410300127, 'a': 0.9027799441751452, 'b': 0.9027799436159013, 'loc': 1.9999999434593596, 'scale': 7.062554221953598e-08}
         return genhyperbolic.rvs(p=params['p'], a=params['a'], b=params['b'], loc=params['loc'], scale=params['scale'])*4
+
+class DistribucionesNuevas:
+    def generar_proxima_llegada(self):
+        while True:
+            r = int(gennorm.rvs(beta= 0.09988947689055722, loc=3.998961573541849, scale=1.6248371198774156e-11))
+            if r >= 0:
+                return r
+            
+    def generar_monto_honorarios(self):
+        params={'a': 0.14349017715809642, 'loc': 8.999999999999998, 'scale': 24.000000000000004}
+        return powerlaw.rvs(a=params['a'], loc=params['loc'], scale=params['scale'])
+
+    def generar_duracion_consulta(self):
+        params={'a': 0.42361987798205225, 'b': 0.4946976129904108, 'loc': 0.8047291306002482, 'scale': 97.27293102030796}
+        return johnsonsb.rvs(a=params['a'],b=params['b'], loc=params['loc'], scale=params['scale'])
