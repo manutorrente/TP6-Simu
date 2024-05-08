@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.stats import binom, norm, lognorm, truncnorm, exponpow, mielke, genhyperbolic, johnsonsb, gennorm, powerlaw
+from scipy.stats import binom, norm, lognorm, truncnorm, exponpow, mielke, genhyperbolic, johnsonsb, gennorm, powerlaw, uniform, pareto
 import math
 
 class Modelo:
@@ -178,7 +178,7 @@ class DistribucionesNuevas:
         while True:
             r = int(gennorm.rvs(beta= 0.09988947689055722, loc=3.998961573541849, scale=1.6248371198774156e-11))
             if r >= 0:
-                return r
+                return r/7
             
     def generar_monto_honorarios(self):
         params={'a': 0.14349017715809642, 'loc': 8.999999999999998, 'scale': 24.000000000000004}
@@ -186,4 +186,16 @@ class DistribucionesNuevas:
 
     def generar_duracion_consulta(self):
         params={'a': 0.42361987798205225, 'b': 0.4946976129904108, 'loc': 0.8047291306002482, 'scale': 97.27293102030796}
-        return johnsonsb.rvs(a=params['a'],b=params['b'], loc=params['loc'], scale=params['scale'])
+        return johnsonsb.rvs(a=params['a'],b=params['b'], loc=params['loc'], scale=params['scale'])*4
+
+
+class DistribucionesEasyFit:
+    def generar_proxima_llegada(self):
+        return uniform.rvs(loc=1.3675, scale=5.3525)/7
+
+    def generar_monto_honorarios(self):
+        return pareto.rvs(b=0.03876, loc=20.189, scale=6.5469)
+    
+    def generar_duracion_consulta(self):
+        return johnsonsb.rvs(a=0.35316, b=0.47835, scale=92.976, loc= -0.88488)*4
+    
