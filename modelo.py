@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.stats import binom, norm, lognorm, truncnorm, exponpow, mielke, genhyperbolic, johnsonsb, gennorm, powerlaw, uniform, pareto
+from scipy.stats import binom, norm, lognorm, truncnorm, exponpow, mielke, genhyperbolic, johnsonsb, gennorm, powerlaw, uniform, genpareto
 import math
 
 class Modelo:
@@ -191,10 +191,10 @@ class DistribucionesNuevas:
 
 class DistribucionesEasyFit:
     def generar_proxima_llegada(self):
-        return uniform.rvs(loc=1.3675, scale=5.3525)/7
+        return uniform.rvs(loc=1.3675, scale=5.3525)/7 
 
     def generar_monto_honorarios(self):
-        return pareto.rvs(b=0.03876, loc=20.189, scale=6.5469)
+        return genpareto.rvs(c=0.03876, scale=6.5469, loc=20.189)
     
     def generar_duracion_consulta(self):
         return johnsonsb.rvs(a=0.35316, b=0.47835, scale=92.976, loc= -0.88488)*4
